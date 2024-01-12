@@ -2,12 +2,12 @@ import Loader from "@/components/shared/Loader";
 import PostCard from "@/components/shared/PostCard";
 import { useGetNewPosts } from "@/lib/react-query/queriesAndMutations";
 import { Models } from "appwrite";
-import { useLayoutEffect } from "react";
 
 const Home = () => {
   const {
     data: posts,
     isPending: isLoadingPosts,
+    // @ts-ignore
     isError: isErrorPosts,
   } = useGetNewPosts();
 

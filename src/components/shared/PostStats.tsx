@@ -10,7 +10,7 @@ import React, { useEffect, useState } from "react";
 import Loader from "./Loader";
 
 type PostStatsProps = {
-  post: Models.Document ;
+  post? : Models.Document;
   userID: string;
 };
 
@@ -46,7 +46,7 @@ const PostStats = ({ post, userID }: PostStatsProps) => {
       likesArray.push(userID);
     }
     setLikes(likesArray);
-    likePost({ postID: post?.$id, likesArray });
+    likePost({ postID: post?.$id || '', likesArray });
   };
 
   const handleSavePost = (
@@ -59,7 +59,7 @@ const PostStats = ({ post, userID }: PostStatsProps) => {
       return deleteSavePost(savedPostRecord.$id);
     }
 
-    savePost({ userID: userID, postID: post?.$id });
+    savePost({ userID: userID, postID: post?.$id || '' });
     setIsSaved(true);
   };
   return (

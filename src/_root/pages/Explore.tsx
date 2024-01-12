@@ -7,7 +7,7 @@ import {
   useGetPosts,
   useSearchPost,
 } from "@/lib/react-query/queriesAndMutations";
-import React, { useEffect, useState } from "react";
+import  { useEffect, useState } from "react";
 import { useInView } from "react-intersection-observer";
 
 const Explore = () => {
@@ -33,6 +33,7 @@ const Explore = () => {
   const shouldShowSearchResults = searchValue !== ""; // if we have something to search for then show the user the matches
   const shouldShowPosts =
     !shouldShowSearchResults &&
+    // @ts-ignore
     posts.pages.every((item) => item.documents.length === 0);
   return (
     <div className="explore-container">
@@ -71,12 +72,14 @@ const Explore = () => {
         {shouldShowSearchResults ? (
           <SearchResults
             isSearchFetching={isSearchFetching}
+            // @ts-ignore
             searchedPosts={searchedPosts}
           />
         ) : shouldShowPosts ? (
           <p className="text-light-4 mt-10 text-center w-full">End of posts</p>
         ) : (
           posts.pages.map((item, index) => (
+            // @ts-ignore
             <GridPostList key={`page-${index}`} posts={item.documents} />
           ))
         )}
