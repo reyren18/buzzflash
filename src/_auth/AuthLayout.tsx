@@ -1,8 +1,29 @@
+import { useEffect, useState } from "react";
 import { Outlet, Navigate } from "react-router-dom";
 
+const AuthLayout = () => {
+  const [backgroundImage, setBackgroundImage] = useState(null);
+  const isAuthenticated = false;
+  const imageUnsplashID = import.meta.env.VITE_UNSPLASH_ACCESS_KEY;
+  useEffect(() => {
+    // Fetch a random image from the Unsplash API
+    const fetchRandomImage = async () => {
+      try {
+        const response = await fetch(
+          `https://api.unsplash.com/photos/random?client_id=${imageUnsplashID}`
+        );
+        const data = await response.json();
 
-export default function AuthLayout() {
-  const isAuthenticated  = false;
+        if (data.urls && data.urls.full) {
+          setBackgroundImage(data.urls.full);
+        }
+      } catch (error) {
+        console.error("Error fetching random image:", error);
+      }
+    };
+
+    fetchRandomImage();
+  }, []); // Empty dependency array ensures the effect runs only once on component mount
 
   return (
     <>
@@ -15,7 +36,7 @@ export default function AuthLayout() {
           </section>
 
           <img
-            src="/assets/images/side-img.svg"
+            src={backgroundImage || "/assets/images/side-img"}
             alt="logo"
             className="hidden xl:block h-screen w-1/2 object-cover bg-no-repeat"
           />
@@ -23,4 +44,6 @@ export default function AuthLayout() {
       )}
     </>
   );
-}
+};
+
+export default AuthLayout;
